@@ -1,37 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script type="module"> 
-    import * as THREE from 'three';
-    
-    function main() {
-      const canvas = document.querySelector('#c');
-      const renderer new THREE.THREEWebGLRenderer({antialias: true, canvas});
-      const fov = 75;
-      const aspect = 2; //canvas default
-      const near = 0.1;
-      const far = 5;
-      const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-      const scene = new THREE.Scene();
-      const boxWidth = 1;
-      const boxHeight = 1;
-      const boxDepth = 1;
-      const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-      const material = new THREE.MeshBasicMaterail({color: 0x44aa88});
-      const cube = new THREE.Mesh(geometry, material);
-
-      scene.add(cube);
-      renderer.render(scene, camera);
-
-      camera.position.z = 2;
-      
+  <meta charset="utf-8">
+  <title>Web Developer Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
     }
-    </script>
+
+    canvas {
+      display: block;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #555;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin-right: 10px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Web Developer Portfolio</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Welcome to my Portfolio</h2>
+    <p>I'm a web developer passionate about creating modern and interactive websites.</p>
+    <p>Check out my projects and feel free to get in touch!</p>
+  </main>
+
+  <script src="https://threejs.org/build/three.js"></script>
+  <script>
+    // Set up the scene
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer({ alpha: true }); // Enable transparency
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Create the tetrahedron geometry
+    var geometry = new THREE.TetrahedronGeometry(3);
+    var material = new THREE.MeshPhongMaterial({ color: 0x00ff00, transparent: true, opacity: 0.8 }); // Transparent material
+    var tetrahedron = new THREE.Mesh(geometry, material);
+    scene.add(tetrahedron);
+
+    // Set up natural lighting
+    var light = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
+    scene.add(light);
+
+    // Set up animation
+    function animate() {
+      requestAnimationFrame(animate);
+      tetrahedron.rotation.x += 0.01;
+      tetrahedron.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+
+    // Set up camera position
+    camera.position.z = 5;
+
+    // Start animation
+    animate();
+  </script>
 </body>
 </html>
